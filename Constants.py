@@ -7,4 +7,4 @@ SIZE = (SCREEN_WIDTH, SCREEN_HEIGHT)
 TITLE = "Snake"
 
 # Colors
-BG_COLOR = (0, 255, 255)
+BG_COLOR = (170, 213, 189)
