@@ -4,6 +4,17 @@ from pygame.locals import *
 import Constants
 import time
 
+class Orange():
+    def __init__(self, parent_window):
+        self.image = pygame.image.load("images\orange.png")
+        self.parent_window = parent_window
+        self.x = 120
+        self.y = 120
+
+    def draw(self):
+        self.parent_window.blit(self.image, (self.x, self.y))
+        pygame.display.flip()
+
 class Snake():
     def __init__(self, parent_window, length):
         self.parent_window = parent_window
@@ -66,6 +77,9 @@ class Game():
 
         self.snake = Snake(self.window, 3)
         self.snake.draw()
+        
+        self.orange = Orange(self.window)
+        self.orange.draw()
 
         pygame.display.update()
     
@@ -93,6 +107,8 @@ class Game():
                     RUNNING = False
 
             self.snake.walk()
+            self.orange.draw()
             time.sleep(0.050)
+
 game = Game()
 game.run() 
