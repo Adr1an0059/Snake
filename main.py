@@ -5,16 +5,21 @@ import Constants
 import time
 
 class Snake():
-    def __init__(self, parent_window):
+    def __init__(self, parent_window, length):
         self.parent_window = parent_window
         self.snake_body = pygame.image.load("images\snake_body.png")
-        self.x = 376
-        self.y = 276
         self.direction = "down"
+
+
+        self.length = length
+        self.x = [24]*length
+        self.y = [24]*length
 
     def draw(self):
         self.parent_window.fill(Constants.BG_COLOR)
-        self.parent_window.blit(self.snake_body, (self.x, self.y))
+
+        for i in range(self.length):
+            self.parent_window.blit(self.snake_body, (self.x[i], self.y[i]))
         pygame.display.flip()
     
     def move_left(self):
@@ -30,18 +35,24 @@ class Snake():
         self.direction = "down"
 
     def walk(self):
+        # Uptade body
+        for i in range(self.length -1, 0, -1):
+            self.x[i] = self.x[i-1]
+            self.y[i] = self.y[i-1]
+        
+        # Update head
         if self.direction == "left":
-            self.x -= 10
+            self.x[0] -= Constants.SIZE_SNAKE
         
         if self.direction == "right":
-            self.x += 10
+            self.x[0] += Constants.SIZE_SNAKE
         
         if self.direction == "up":
-            self.y -= 10
+            self.y[0] -= Constants.SIZE_SNAKE
         
         if self.direction == "down":
-            self.y += 10
-
+            self.y[0] += Constants.SIZE_SNAKE
+        
         self.draw()
 
 class Game():
@@ -52,7 +63,8 @@ class Game():
         self.window.fill(Constants.BG_COLOR)
         icon = pygame.image.load("images\icon.png")
         pygame.display.set_icon(icon)
-        self.snake = Snake(self.window)
+
+        self.snake = Snake(self.window, 3)
         self.snake.draw()
 
         pygame.display.update()

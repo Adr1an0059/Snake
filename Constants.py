@@ -8,3 +8,6 @@ TITLE = "Snake"
 
 # Colors
 BG_COLOR = (170, 213, 189)
+
+# Size snake body
+SIZE_SNAKE = 24
