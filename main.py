@@ -3,6 +3,7 @@ import pygame
 from pygame.locals import *
 import Constants
 import time
+import random as rd
 
 class Orange():
     def __init__(self, parent_window):
@@ -15,6 +16,10 @@ class Orange():
         self.parent_window.blit(self.image, (self.x, self.y))
         pygame.display.flip()
 
+    def move(self):
+        self.x = rd.randint(24, 776)
+        self.y = rd.randint(24, 576)
+
 class Snake():
     def __init__(self, parent_window, length):
         self.parent_window = parent_window
@@ -25,6 +30,11 @@ class Snake():
         self.length = length
         self.x = [24]*length
         self.y = [24]*length
+    
+    def increase_length(self):
+        self.length += 1
+        self.x.append(-1)
+        self.y.append(-1) # Append adds a new thing to a list
 
     def draw(self):
         self.parent_window.fill(Constants.BG_COLOR)
@@ -46,7 +56,7 @@ class Snake():
         self.direction = "down"
 
     def walk(self):
-        # Uptade body
+        # Update body
         for i in range(self.length -1, 0, -1):
             self.x[i] = self.x[i-1]
             self.y[i] = self.y[i-1]
@@ -82,6 +92,24 @@ class Game():
         self.orange.draw()
 
         pygame.display.update()
+
+    # Collition logic
+    def is_collition(self, x1, y1, x2, y2):
+        if x1 >= x2 and x1 < x2 + Constants.ORANGE_SIZE:
+            if y1 >= y2 and y1 < y2 + Constants.ORANGE_SIZE:
+                return True
+        return False
+
+    # Play method
+    def play(self):
+        self.snake.walk()
+        self.orange.draw()
+
+        if self.is_collition(self.snake.x[0], self.snake.y[0], self.orange.x, self.orange.y):
+#           print("kaboom")
+            self.snake.increase_length()
+            self.orange.move()
+
     
     def run(self):
         RUNNING = True
@@ -106,8 +134,7 @@ class Game():
                 elif event.type == QUIT:
                     RUNNING = False
 
-            self.snake.walk()
-            self.orange.draw()
+            self.play()
             time.sleep(0.050)
 
 game = Game()

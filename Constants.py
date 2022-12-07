@@ -11,3 +11,11 @@ BG_COLOR = (170, 213, 189)
 
 # Size snake body
 SIZE_SNAKE = 24
+
+# Orange size
+ORANGE_SIZE = 24
+
+# Score
+SCORE = 0
+SCORE_X = 10
+SCORE_Y = 10
