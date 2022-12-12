@@ -104,11 +104,19 @@ class Game():
     def play(self):
         self.snake.walk()
         self.orange.draw()
+        self.display_score()
+        pygame.display.flip()
 
         if self.is_collition(self.snake.x[0], self.snake.y[0], self.orange.x, self.orange.y):
 #           print("kaboom")
             self.snake.increase_length()
             self.orange.move()
+
+    # Show score
+    def display_score(self):
+        font = pygame.font.SysFont("Font.ttf", 30)
+        score = font.render(F"Score: {self.snake.length - 3}", True, (255, 255, 255))
+        self.window.blit(score, (Constants.SCORE_X, Constants.SCORE_Y))
 
     
     def run(self):
