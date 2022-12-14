@@ -9,8 +9,8 @@ class Orange():
     def __init__(self, parent_window):
         self.image = pygame.image.load("images\orange.png")
         self.parent_window = parent_window
-        self.x = 120
-        self.y = 120
+        self.x = 376
+        self.y = 276    
 
     def draw(self):
         self.parent_window.blit(self.image, (self.x, self.y))
@@ -24,7 +24,7 @@ class Snake():
     def __init__(self, parent_window, length):
         self.parent_window = parent_window
         self.snake_body = pygame.image.load("images\snake_body.png")
-        self.direction = "down"
+        self.direction = "a"
 
 
         self.length = length
@@ -111,6 +111,11 @@ class Game():
 #           print("kaboom")
             self.snake.increase_length()
             self.orange.move()
+        
+        # Snake colliding with itself
+        for i in range(3, self.snake.length):
+            if self.is_collition(self.snake.x[0], self.snake.y[0], self.snake.x[i], self.snake.y[i]):
+                print ("Ka boom")
 
     # Show score
     def display_score(self):
